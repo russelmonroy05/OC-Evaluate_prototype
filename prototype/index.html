@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype — Front Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+            <div class="sidebar__brand">
+                <img src="images/background.png" alt="Logo" class="sidebar__logo">
+                <span class="brand-text">Osmeña Colleges</span>
+            </div>
+            <button id="closeBtn" class="close-btn" aria-label="Close menu" aria-hidden="true">×</button>
+            <nav class="sidebar__nav">
+                <a class="nav__link active" href="#">
+
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z" fill="currentColor"/></svg>
+                    <span class="label">Home</span>
+                </a>
+                <a class="nav__link" href="#about">
+
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/></svg>
+                    <span class="label">About</span>
+                </a>
+                <a class="nav__link" href="#contact">
+
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6H4v12h16V6zm-8 7L6 8h12l-8 5z" fill="currentColor"/></svg>
+                    <span class="label">Contact</span>
+                </a>
+            </nav>
+        </aside>
+
+        <div class="content">
+            <header class="topbar">
+                <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+                    <span class="menu-icon"></span>
+                </button>
+                <h1 class="title">OC Evaluation System Prototype</h1>
+            </header>
+
+            <main>
+                <section class="hero">
+                    <div class="hero__card">
+                        <h2>Elegant, responsive front page</h2>
+                        <p>A clean layout with an accessible, collapsible sidebar. Resize the window or tap the menu button on small screens.</p>
+                        <p><a class="btn" href="#about">Get Started</a></p>
+                    </div>
+                </section>
+
+                <section id="about" class="info">
+                    <h3>About</h3>
+                    <p>This prototype demonstrates a tidy, modern layout with a sidebar navigation that adapts to mobile screens.</p>
+                </section>
+
+                <section id="contact" class="info">
+                    <h3>Contact</h3>
+                    <p>hello@example.com</p>
+                </section>
+            </main>
+        </div>
+    </div>
+
+        <script>
+            (function () {
+                const menuBtn = document.getElementById('menuBtn');
+                const closeBtn = document.getElementById('closeBtn');
+                const sidebar = document.getElementById('sidebar');
+                if (!menuBtn || !sidebar || !closeBtn) return;
+
+
+                sidebar.setAttribute('aria-hidden', 'true');
+                closeBtn.style.display = 'none';
+
+                function openSidebar() {
+                    sidebar.classList.add('open');
+                    sidebar.setAttribute('aria-hidden', 'false');
+
+                    menuBtn.style.display = 'none';
+                   
+                    closeBtn.setAttribute('aria-hidden', 'false');
+                    menuBtn.setAttribute('aria-expanded', 'true');
+                }
+
+                function closeSidebar() {
+                    sidebar.classList.remove('open');
+                    sidebar.setAttribute('aria-hidden', 'true');
+                    menuBtn.style.display = '';
+                    closeBtn.setAttribute('aria-hidden', 'true');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                }
+
+                menuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openSidebar();
+                });
+
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeSidebar();
+                });
+
+                
+                const navLinks = sidebar.querySelectorAll('.nav__link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        
+                        if (window.innerWidth < 900 && sidebar.classList.contains('open')) {
+                            closeSidebar();
+                        }
+                    });
+                });
+
+             
+                document.addEventListener('click', (e) => {
+                    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target) && !closeBtn.contains(e.target) && sidebar.classList.contains('open') && window.innerWidth < 900) {
+                        closeSidebar();
+                    }
+                });
+            })();
+        </script>
+</body>
+</html>
